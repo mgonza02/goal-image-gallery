@@ -55,10 +55,10 @@ export const ImageOverlay = styled(Box)(({ theme }) => ({
  * Styled component for modal container
  */
 export const StyledModalContainer = styled(Box)(({ theme, isMobile }) => ({
-  top: isMobile ? '1vh' : '3vh',
-  left: isMobile ? '0' : '2vw',
+  top:  '50%',
+  left:  '50%',
+  transform: 'translate(-50%, -50%) !important',
   position: 'absolute',
-  transform: 'translate(-50%, -50%)',
   width: isMobile ? '95vw' : '90vw',
   maxWidth: 1200,
   height: isMobile ? '95vh' : '90vh',
