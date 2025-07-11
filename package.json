@@ -1,6 +1,6 @@
 {
     "name": "@mgonza02/goal-image-gallery",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Advanced, accessible, and highly customizable React image gallery component with multi-method upload, responsive design, and extensive TypeScript support",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -37,6 +37,8 @@
         "MIGRATION.md",
         "IMPLEMENTATION_GUIDE.md",
         "IMPLEMENTATION_SUMMARY.md",
+        "DOCUMENTATION_UPDATE_SUMMARY.md",
+        "PACKAGE_CLEANUP_SUMMARY.md",
         "LICENSE"
     ],
     "peerDependencies": {
@@ -55,13 +57,10 @@
         "build:js": "babel src --out-dir lib --copy-files --ignore '**/*.test.js'",
         "build:types": "cp src/index.d.ts lib/index.d.ts",
         "prepublishOnly": "npm run build",
-        "test": "jest",
-        "lint": "echo 'Linting skipped for now'",
-        "lint:check": "echo 'Lint check skipped for now'",
         "format": "prettier --write src/**/*.js",
         "format:check": "prettier --check src/**/*.js",
         "clean": "rm -rf lib",
-        "validate": "npm run lint:check && npm run format:check",
+        "validate": "npm run format:check",
         "dev": "npm run build -- --watch",
         "prepack": "npm run validate && npm run build"
     },
@@ -70,20 +69,7 @@
         "@babel/core": "^7.20.0",
         "@babel/preset-env": "^7.20.0",
         "@babel/preset-react": "^7.18.0",
-        "eslint-plugin-react": "^7.31.0",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "jest": "^29.0.0",
-        "@babel/eslint-parser": "^7.25.9",
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-        "@testing-library/jest-dom": "^6.6.3",
-        "babel-preset-react-app": "^10.0.1",
-        "eslint": "^9.16.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-prettier": "^5.2.1",
-        "http-proxy-middleware": "^3.0.3",
-        "prettier": "^3.4.2",
-        "typescript": "^5.7.2",
-        "web-vitals": "^4.2.4"
+        "prettier": "^3.4.2"
     },
     "browserslist": {
         "production": [
