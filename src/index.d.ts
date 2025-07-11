@@ -12,6 +12,11 @@ export interface GoalImageGalleryProps {
   emptyMessage?: string;
   showImageInfo?: boolean;
   allowDownload?: boolean;
+  getImageUrl?: (params: { imageCode: string; thumbMail?: boolean }) => string;
+  noImageUrl?: string;
+  showError?: (message: string) => void;
+  hasPermission?: (permission: string) => boolean;
+  currentCompany?: string;
 }
 
 // Image item interface

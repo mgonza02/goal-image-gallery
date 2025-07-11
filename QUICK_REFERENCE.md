@@ -1,9 +1,15 @@
 # GoalImageGallery - Quick Reference
 
+## Installation
+
+```bash
+npm install @mgonza02/goal-image-gallery
+```
+
 ## Basic Usage
 
 ```javascript
-import GoalImageGallery from './components/common/goal-image-gallery';
+import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 
 // Read-only gallery
 <GoalImageGallery imageCodes={['img1', 'img2']} canEdit={false} />

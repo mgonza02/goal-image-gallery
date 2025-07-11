@@ -3,10 +3,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { Box, Typography, Button, Divider } from '@mui/material';
-import GoalImageGallery from '../goal-image-gallery';
-import { goalMediaApi } from '../../../api/goal/media/goal-media';
-import { useAuth } from '../../../hooks/use-auth';
-import { useApp } from '../../../hooks/use-app';
+import GoalImageGallery from './GoalImageGallery';
 
 // Example 1: Basic Read-Only Gallery
 export const BasicGalleryExample = () => {
@@ -29,26 +26,24 @@ export const BasicGalleryExample = () => {
 // Example 2: Editable Product Gallery
 export const ProductGalleryExample = () => {
   const [productImages, setProductImages] = useState(['prod1', 'prod2']);
-  const { currentCompany } = useApp();
-  const { hasPermission } = useAuth();
+  const currentCompany = 'default-company';
+  const hasPermission = (perm) => true; // Mock permission check
 
   const handleImageUpload = useCallback(
     async (imageData) => {
       try {
-        const response = await goalMediaApi.submitImage({
-          values: {
-            ...imageData,
-            application: 'PRODUCT_GALLERY',
-            folder: 'products',
-            companyId: currentCompany
-          }
+        // Mock API call
+        const response = await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              data: { code: `img-${Date.now()}` },
+              message: 'Product images uploaded successfully'
+            });
+          }, 1000);
         });
 
-        return {
-          success: true,
-          data: response.data,
-          message: 'Product images uploaded successfully'
-        };
+        return response;
       } catch (error) {
         return {
           success: false,
@@ -79,6 +74,8 @@ export const ProductGalleryExample = () => {
         emptyMessage="No product images available"
         showImageInfo={true}
         allowDownload={true}
+        hasPermission={hasPermission}
+        currentCompany={currentCompany}
       />
     </Box>
   );

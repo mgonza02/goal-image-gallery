@@ -40,8 +40,12 @@ The `GoalImageGallery` is a modern, feature-rich image gallery component for the
 
 ## Installation
 
+```bash
+npm install @mgonza02/goal-image-gallery
+```
+
 ```javascript
-import GoalImageGallery from './components/common/goal-image-gallery';
+import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 ```
 
 ## Basic Usage
@@ -367,7 +371,7 @@ goal-image-gallery/
 
 #### Main Component
 ```javascript
-import { GoalImageGallery } from '@goal/components/common/goal-image-gallery';
+import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 ```
 
 #### Sub-components
@@ -377,7 +381,7 @@ import {
   ImageGalleryModal, 
   ImageGalleryItem,
   ImageGalleryEmptyState
-} from '@goal/components/common/goal-image-gallery';
+} from '@mgonza02/goal-image-gallery';
 ```
 
 #### Custom Hooks
@@ -387,7 +391,7 @@ import {
   useImageZoom,
   useClipboard,
   useKeyboardNavigation
-} from '@goal/components/common/goal-image-gallery';
+} from '@mgonza02/goal-image-gallery';
 ```
 
 #### Styled Components
@@ -396,7 +400,7 @@ import {
   StyledImageContainer,
   ImageOverlay,
   StyledModalContainer
-} from '@goal/components/common/goal-image-gallery';
+} from '@mgonza02/goal-image-gallery';
 ```
 
 #### Utility Functions
@@ -408,7 +412,7 @@ import {
   getGridColumns,
   isValidImageFile,
   formatFileSize
-} from '@goal/components/common/goal-image-gallery';
+} from '@mgonza02/goal-image-gallery';
 ```
 
 ### Using Individual Components
@@ -418,7 +422,7 @@ import {
   ImageGalleryGrid, 
   ImageGalleryModal, 
   useImageGallery 
-} from '@goal/components/common/goal-image-gallery';
+} from '@mgonza02/goal-image-gallery';
 
 function CustomGallery() {
   const { imageList, openImage, handleOpenImage } = useImageGallery({
@@ -450,12 +454,12 @@ The component is now ready for export as an independent package:
 
 ```json
 {
-  "name": "@goal/image-gallery",
+  "name": "@mgonza02/goal-image-gallery",
   "version": "1.0.0",
   "description": "Enhanced, modular image gallery component for React applications",
-  "main": "index.js",
-  "module": "index.js",
-  "types": "index.d.ts"
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts"
 }
 ```
 

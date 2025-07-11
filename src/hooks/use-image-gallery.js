@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-import { showNotify } from '../../../../hooks/toasty';
 
 /**
  * Custom hook for managing image gallery state
@@ -13,7 +12,7 @@ export const useImageGallery = ({
   ownerEntity,
   currentCompany,
   onRefresh,
-  showError
+  showError,
 }) => {
   const [openImage, setOpenImage] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -35,7 +34,7 @@ export const useImageGallery = ({
         width: 1,
         height: 1,
         title: 'Goal Image',
-        image_code
+        image_code,
       }));
       newList = [...list];
     } else {
@@ -64,7 +63,7 @@ export const useImageGallery = ({
     setZoomLevel(1);
   }, []);
 
-  const handleImageSelect = useCallback((image) => {
+  const handleImageSelect = useCallback(image => {
     setSelectedImage(image);
     setSelectingImage(true);
   }, []);
@@ -74,7 +73,7 @@ export const useImageGallery = ({
   }, []);
 
   const handleRemoveImage = useCallback(
-    async (image) => {
+    async image => {
       setLoading(true);
       try {
         const imagesToSave = imageList.reduce((acc, img) => {
@@ -88,11 +87,9 @@ export const useImageGallery = ({
           ...ownerEntity,
           companyId: currentCompany,
           image_code: imagesToSave,
-          company_id: currentCompany
+          company_id: currentCompany,
         });
-
         if (result.success) {
-          showNotify('Imagen eliminada correctamente');
           onRefresh?.(result);
         } else {
           showError(result.message);
@@ -107,7 +104,7 @@ export const useImageGallery = ({
   );
 
   const handleAfterUpload = useCallback(
-    async (image) => {
+    async image => {
       const currentImageCode = selectedImage?.image_code || '';
       const imagesToSave = imageList.reduce((acc, img) => {
         if (img.image_code !== '+') {
@@ -124,11 +121,10 @@ export const useImageGallery = ({
         ...ownerEntity,
         companyId: currentCompany,
         image_code: imagesToSave,
-        company_id: currentCompany
+        company_id: currentCompany,
       });
 
       if (result.success) {
-        showNotify('Imagen guardada correctamente');
         setSelectingImage(false);
         onRefresh?.(result);
       } else {
@@ -153,7 +149,7 @@ export const useImageGallery = ({
     handleImageSelect,
     handleCancel,
     handleRemoveImage,
-    handleAfterUpload
+    handleAfterUpload,
   };
 };
 
@@ -165,11 +161,11 @@ export const useImageZoom = (getImageUrl, imageList) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const handleZoomIn = useCallback(() => {
-    setZoomLevel((prev) => Math.min(prev + 0.5, 3));
+    setZoomLevel(prev => Math.min(prev + 0.5, 3));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoomLevel((prev) => Math.max(prev - 0.5, 0.5));
+    setZoomLevel(prev => Math.max(prev - 0.5, 0.5));
   }, []);
 
   const handlePreviousImage = useCallback(() => {
@@ -194,7 +190,7 @@ export const useImageZoom = (getImageUrl, imageList) => {
     handleZoomIn,
     handleZoomOut,
     handlePreviousImage,
-    handleNextImage
+    handleNextImage,
   };
 };
 
@@ -209,7 +205,7 @@ export const useClipboard = (updatable, selectingImage, onPasteImage) => {
   }, []);
 
   useEffect(() => {
-    const handlePaste = async (event) => {
+    const handlePaste = async event => {
       if (!clipboardSupported || !updatable || selectingImage) return;
 
       const items = event.clipboardData?.items;
@@ -247,7 +243,7 @@ export const useKeyboardNavigation = (
   onZoomOut
 ) => {
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = event => {
       if (openImage !== null) {
         switch (event.key) {
           case 'ArrowLeft':

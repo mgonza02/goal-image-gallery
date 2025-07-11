@@ -25,3 +25,5 @@ yarn-error.log*
 /sync
 .env
 .drafts/
+dist/
+lib/

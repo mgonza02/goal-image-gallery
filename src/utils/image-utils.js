@@ -27,7 +27,7 @@ export const downloadImage = (imageUrl, imageCode) => {
 /**
  * Process image codes into standardized format
  */
-export const processImageCodes = (imageCodes) => {
+export const processImageCodes = imageCodes => {
   if (!imageCodes) return [];
 
   const splitedImages = Array.isArray(imageCodes) ? imageCodes : imageCodes.split(/[\s,]+/);
@@ -36,7 +36,7 @@ export const processImageCodes = (imageCodes) => {
     width: 1,
     height: 1,
     title: 'Goal Image',
-    image_code
+    image_code,
   }));
 };
 
@@ -52,7 +52,7 @@ export const getGridColumns = (isMobile, isTablet, multiple) => {
 /**
  * Validate image file type
  */
-export const isValidImageFile = (file) => {
+export const isValidImageFile = file => {
   const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
   return validTypes.includes(file.type);
 };
@@ -60,7 +60,7 @@ export const isValidImageFile = (file) => {
 /**
  * Format file size for display
  */
-export const formatFileSize = (bytes) => {
+export const formatFileSize = bytes => {
   if (bytes === 0) return '0 Bytes';
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -100,7 +100,7 @@ export const isTouchDevice = () => {
 /**
  * Get image dimensions from URL
  */
-export const getImageDimensions = (url) => {
+export const getImageDimensions = url => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
@@ -114,10 +114,10 @@ export const getImageDimensions = (url) => {
 /**
  * Create image preview from file
  */
-export const createImagePreview = (file) => {
+export const createImagePreview = file => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target.result);
+    reader.onload = e => resolve(e.target.result);
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });

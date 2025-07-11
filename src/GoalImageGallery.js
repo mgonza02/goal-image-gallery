@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import { useApp } from '../../../hooks/use-app';
-import { useAuth } from '../../../hooks/use-auth';
-import { EnhancedImageSelector } from '../enhanced-image-selector';
+import { useMediaQuery } from '@mui/material';
 import ImageGalleryGrid from './components/ImageGalleryGrid';
 import ImageGalleryModal from './components/ImageGalleryModal';
 import {
@@ -13,7 +11,6 @@ import {
   useKeyboardNavigation
 } from './hooks/use-image-gallery';
 import { downloadImage } from './utils/image-utils';
-import { useMediaQuery } from '@mui/material';
 
 /**
  * Enhanced GoalImageGallery Component
@@ -52,6 +49,10 @@ import { useMediaQuery } from '@mui/material';
  * - emptyMessage: Message shown when no images
  * - showImageInfo: Show image information overlay
  * - allowDownload: Enable download functionality
+ * - getImageUrl: Function to get image URL from code
+ * - noImageUrl: Fallback image URL
+ * - showError: Function to show error messages
+ * - hasPermission: Function to check user permissions
  */
 const GoalImageGallery = ({
   canEdit = false,
@@ -63,18 +64,21 @@ const GoalImageGallery = ({
   permission,
   emptyMessage = 'No hay imágenes para mostrar',
   showImageInfo = false,
-  allowDownload = false
+  allowDownload = false,
+  getImageUrl = ({ imageCode }) => `/images/${imageCode}`,
+  noImageUrl = '/images/no-image.png',
+  showError = (message) => console.error(message),
+  hasPermission = () => true,
+  currentCompany = 'default'
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { getImageUrl, noImageUrl, currentCompany, showError } = useApp();
-  const { hasPermission } = useAuth();
 
   const [updatable, setUpdatable] = useState(false);
 
   // Initialize permissions
   useEffect(() => {
-    const isAllowed = !permission || !!(permission && hasPermission(permission));
+    const isAllowed = !permission || hasPermission(permission);
     setUpdatable(!!(isAllowed && canEdit && imageHandlerApi && ownerEntity));
   }, [canEdit, ownerEntity, permission, hasPermission, imageHandlerApi]);
 
@@ -169,18 +173,23 @@ const GoalImageGallery = ({
   // Show image selector if needed
   if (updatable && (selectingImage || !imageList || imageList.length === 0)) {
     return (
-      <EnhancedImageSelector
-        afterUpload={handleAfterUpload}
-        activate={selectingImage}
-        onCancel={handleCancel}
-        multiple={multiple}
-        title={multiple ? 'Seleccionar Imágenes' : 'Seleccionar Imagen'}
-        uploadMessage={
-          multiple
+      <div style={{ 
+        padding: '20px', 
+        border: '2px dashed #ccc', 
+        textAlign: 'center', 
+        borderRadius: '8px',
+        backgroundColor: '#f5f5f5'
+      }}>
+        <p>{multiple ? 'Seleccionar Imágenes' : 'Seleccionar Imagen'}</p>
+        <p style={{ color: '#666', fontSize: '14px' }}>
+          {multiple
             ? 'Arrastra imágenes aquí o haz clic para seleccionar'
-            : 'Arrastra una imagen aquí o haz clic para seleccionar'
-        }
-      />
+            : 'Arrastra una imagen aquí o haz clic para seleccionar'}
+        </p>
+        <button onClick={handleCancel} style={{ marginTop: '10px' }}>
+          Cancelar
+        </button>
+      </div>
     );
   }
 
@@ -231,7 +240,12 @@ GoalImageGallery.propTypes = {
   permission: PropTypes.string,
   emptyMessage: PropTypes.string,
   showImageInfo: PropTypes.bool,
-  allowDownload: PropTypes.bool
+  allowDownload: PropTypes.bool,
+  getImageUrl: PropTypes.func,
+  noImageUrl: PropTypes.string,
+  showError: PropTypes.func,
+  hasPermission: PropTypes.func,
+  currentCompany: PropTypes.string
 };
 
 export default GoalImageGallery;

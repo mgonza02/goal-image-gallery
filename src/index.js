@@ -7,12 +7,6 @@
 export { default as GoalImageGallery } from './GoalImageGallery';
 export { default } from './GoalImageGallery';
 
-// Legacy component (for backward compatibility)
-export { default as LegacyGoalImageGallery } from '../goal-image-gallery';
-
-// Enhanced versions
-export { default as EnhancedGoalImageGallery } from '../enhanced-goal-image-gallery';
-
 // Subcomponent exports
 export { default as ImageGalleryGrid } from './components/ImageGalleryGrid';
 export { default as ImageGalleryModal } from './components/ImageGalleryModal';
@@ -53,13 +47,9 @@ export {
   getImageDimensions,
   createImagePreview
 } from './utils/image-utils';
-export { EnhancedImageSelector } from '../enhanced-image-selector';
 
 // Examples and documentation
 export { default as GoalImageGalleryExamples } from './examples';
-
-// Re-export common components for convenience
-export { CommonImageSelector } from '../common-image-selector';
 
 // Component features and capabilities
 export const FEATURES = {

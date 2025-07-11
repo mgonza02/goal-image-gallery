@@ -22,7 +22,7 @@ import { CommonImageGallery } from './components/common/common-image-gallery';
 
 #### After
 ```javascript
-import GoalImageGallery from './components/common/goal-image-gallery';
+import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 
 <GoalImageGallery
   imageCodes={photos.map(p => p.image_code)}
@@ -237,9 +237,11 @@ const handleImageUpload = async (imageData) => {
 
 ### Step 1: Install Dependencies
 ```bash
-# Ensure you have required dependencies
-npm install @mui/material @mui/icons-material
-npm install react-dropzone
+# Install the new package
+npm install @mgonza02/goal-image-gallery
+
+# Ensure you have required peer dependencies
+npm install @mui/material @mui/icons-material @emotion/react @emotion/styled
 ```
 
 ### Step 2: Update Imports
@@ -249,7 +251,7 @@ npm install react-dropzone
 // import Gallery from 'react-photo-gallery';
 
 // Add new import
-import GoalImageGallery from './components/common/goal-image-gallery';
+import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 ```
 
 ### Step 3: Convert Data Format

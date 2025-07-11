@@ -1,10 +1,10 @@
 {
-    "name": "@goal/image-gallery",
-    "version": "1.0.0",
+    "name": "@mgonza02/goal-image-gallery",
+    "version": "1.0.1",
     "description": "Enhanced, modular image gallery component for React applications",
-    "main": "index.js",
-    "module": "index.js",
-    "types": "index.d.ts",
+    "main": "lib/index.js",
+    "module": "lib/index.js",
+    "types": "lib/index.d.ts",
     "keywords": [
         "react",
         "image-gallery",
@@ -21,20 +21,22 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/your-org/goal-front"
+        "url": "git+https://github.com/mgonza02/goal-image-gallery.git"
+    },
+    "homepage": "https://github.com/mgonza02/goal-image-gallery#readme",
+    "bugs": {
+        "url": "https://github.com/mgonza02/goal-image-gallery/issues"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "files": [
-        "index.js",
-        "GoalImageGallery.js",
-        "components/",
-        "hooks/",
-        "styles/",
-        "utils/",
-        "examples/",
+        "lib/",
         "README.md",
         "QUICK_REFERENCE.md",
         "MIGRATION.md",
-        "IMPLEMENTATION_SUMMARY.md"
+        "IMPLEMENTATION_SUMMARY.md",
+        "LICENSE"
     ],
     "peerDependencies": {
         "react": "^18.0.0",
@@ -48,11 +50,19 @@
         "prop-types": "^15.8.0"
     },
     "scripts": {
-        "build": "npm run build:js",
-        "build:js": "babel src --out-dir lib --copy-files",
+        "build": "npm run clean && npm run build:js && npm run build:types",
+        "build:js": "babel src --out-dir lib --copy-files --ignore '**/*.test.js'",
+        "build:types": "cp src/index.d.ts lib/index.d.ts",
+        "prepublishOnly": "npm run build",
         "test": "jest",
-        "lint": "eslint src/**/*.js",
-        "format": "prettier --write src/**/*.js"
+        "lint": "eslint src/**/*.js --fix",
+        "lint:check": "eslint src/**/*.js",
+        "format": "prettier --write src/**/*.js",
+        "format:check": "prettier --check src/**/*.js",
+        "clean": "rm -rf lib",
+        "validate": "npm run lint:check && npm run format:check",
+        "dev": "npm run build -- --watch",
+        "prepack": "npm run validate && npm run build"
     },
     "devDependencies": {
         "@babel/cli": "^7.20.0",

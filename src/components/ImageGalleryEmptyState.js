@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Stack, Chip } from '@mui/material';
+import { Typography, Stack, Chip, Button } from '@mui/material';
 import {
   Image as ImageIcon,
   CloudUpload as UploadIcon,
   ContentPaste as PasteIcon,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Add as AddIcon,
 } from '@mui/icons-material';
-import { AddButton } from '../../../common/buttons/add-button';
 import { StyledEmptyStateContainer } from '../styles/styled-components';
 
 /**
@@ -24,7 +24,9 @@ const ImageGalleryEmptyState = ({ emptyMessage, updatable, clipboardSupported, o
 
         {updatable && (
           <>
-            <AddButton onClick={onAddImage} sx={{ mt: 2 }} tooltip="Agregar imagen" />
+            <Button variant="contained" startIcon={<AddIcon />} onClick={onAddImage} sx={{ mt: 2 }}>
+              Agregar imagen
+            </Button>
 
             <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2 }}>
               <Chip
@@ -68,13 +70,13 @@ ImageGalleryEmptyState.propTypes = {
   emptyMessage: PropTypes.string.isRequired,
   updatable: PropTypes.bool,
   clipboardSupported: PropTypes.bool,
-  onAddImage: PropTypes.func
+  onAddImage: PropTypes.func,
 };
 
 ImageGalleryEmptyState.defaultProps = {
   updatable: false,
   clipboardSupported: false,
-  onAddImage: () => {}
+  onAddImage: () => {},
 };
 
 export default ImageGalleryEmptyState;

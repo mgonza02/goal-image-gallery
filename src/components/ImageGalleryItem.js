@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, IconButton, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Skeleton, Tooltip, Typography, Button } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 import {
   ChangeCircle as ChangeIcon,
   Download as DownloadIcon,
-  Visibility as ViewIcon
+  Visibility as ViewIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { StyledImageContainer, ImageOverlay } from '../styles/styled-components';
-import { AddButton } from '../../../common/buttons/add-button';
-import { DeleteButton } from '../../../common/buttons/delete-button';
 import { handleImageError } from '../utils/image-utils';
 
 /**
@@ -28,7 +28,7 @@ const ImageGalleryItem = ({
   onImageClick,
   onImageSelect,
   onRemoveImage,
-  onDownloadImage
+  onDownloadImage,
 }) => {
   const theme = useTheme();
 
@@ -43,19 +43,30 @@ const ImageGalleryItem = ({
           justifyContent: 'center',
           border: '2px dashed',
           borderColor: 'primary.main',
-          backgroundColor: alpha(theme.palette.primary.main, 0.04)
+          backgroundColor: alpha(theme.palette.primary.main, 0.04),
+          cursor: 'pointer',
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+          },
         }}
+        onClick={() => onImageSelect(null)}
       >
-        <AddButton
-          onClick={() => onImageSelect(null)}
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
           sx={{
             width: '100%',
             height: '100%',
             border: 'none',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            '&:hover': {
+              border: 'none',
+              backgroundColor: 'transparent',
+            },
           }}
-          tooltip="Agregar imagen"
-        />
+        >
+          Agregar imagen
+        </Button>
       </StyledImageContainer>
     );
   }
@@ -69,12 +80,12 @@ const ImageGalleryItem = ({
         src={getImageUrl({ imageCode: image.image_code, thumbMail: true })}
         alt={image.title || `Imagen ${index + 1}`}
         onClick={() => onImageClick(getImageUrl({ imageCode: image.image_code }), index)}
-        onError={(e) => handleImageError(e, noImageUrl)}
+        onError={e => handleImageError(e, noImageUrl)}
         style={{
           width: '100%',
           height: 200,
           objectFit: 'cover',
-          display: loading ? 'none' : 'block'
+          display: loading ? 'none' : 'block',
         }}
       />
 
@@ -82,7 +93,7 @@ const ImageGalleryItem = ({
         <Tooltip title="Ver imagen">
           <IconButton
             size="small"
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               onImageClick(getImageUrl({ imageCode: image.image_code }), index);
             }}
@@ -95,7 +106,7 @@ const ImageGalleryItem = ({
           <Tooltip title="Descargar imagen">
             <IconButton
               size="small"
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation();
                 onDownloadImage(image.image_code);
               }}
@@ -109,7 +120,7 @@ const ImageGalleryItem = ({
           <Tooltip title="Cambiar imagen">
             <IconButton
               size="small"
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation();
                 onImageSelect(image);
               }}
@@ -123,11 +134,15 @@ const ImageGalleryItem = ({
           <Tooltip title="Eliminar imagen">
             <IconButton
               size="small"
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation();
+                if (window.confirm('¿Está seguro de que desea eliminar esta imagen?')) {
+                  onRemoveImage(image);
+                }
               }}
+              color="error"
             >
-              <DeleteButton onConfirm={() => onRemoveImage(image)} size="small" iconOnly />
+              <DeleteIcon />
             </IconButton>
           </Tooltip>
         )}
@@ -142,7 +157,7 @@ const ImageGalleryItem = ({
             right: 0,
             backgroundColor: alpha(theme.palette.common.black, 0.7),
             color: 'white',
-            p: 1
+            p: 1,
           }}
         >
           <Typography variant="caption" noWrap>
@@ -167,7 +182,7 @@ ImageGalleryItem.propTypes = {
   onImageClick: PropTypes.func.isRequired,
   onImageSelect: PropTypes.func.isRequired,
   onRemoveImage: PropTypes.func.isRequired,
-  onDownloadImage: PropTypes.func.isRequired
+  onDownloadImage: PropTypes.func.isRequired,
 };
 
 ImageGalleryItem.defaultProps = {
@@ -175,7 +190,7 @@ ImageGalleryItem.defaultProps = {
   updatable: false,
   removable: false,
   allowDownload: false,
-  showImageInfo: false
+  showImageInfo: false,
 };
 
 export default ImageGalleryItem;
