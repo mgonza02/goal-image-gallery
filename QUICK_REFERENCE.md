@@ -23,6 +23,25 @@ import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
   afterUpload={refreshData}
   multiple={true}
 />
+
+// With custom image selector
+<GoalImageGallery
+  imageCodes={images}
+  canEdit={true}
+  ownerEntity={{ id: 'entity-123' }}
+  imageHandlerApi={handleUpload}
+  afterUpload={refreshData}
+  multiple={true}
+  slot={{
+    selector: CustomImageSelector
+  }}
+  slotProps={{
+    selector: {
+      maxFileSize: 5 * 1024 * 1024,
+      customStyles: { borderColor: '#007bff' }
+    }
+  }}
+/>
 ```
 
 ## Props Reference
@@ -163,6 +182,33 @@ const handleUpload = async (imageData) => {
   }
 };
 ```
+
+## Essential Props
+
+### Core Props
+- `imageCodes`: `string | string[]` - Image codes to display
+- `canEdit`: `boolean` - Enable editing capabilities
+- `multiple`: `boolean` - Allow multiple image selection
+- `ownerEntity`: `object` - Entity that owns the images
+- `imageHandlerApi`: `function` - API function for image operations
+- `afterUpload`: `function` - Callback after successful upload
+
+### Display Props
+- `emptyMessage`: `string` - Message when no images (default: "No hay imágenes para mostrar")
+- `showImageInfo`: `boolean` - Show image information overlay
+- `allowDownload`: `boolean` - Enable download functionality
+- `getImageUrl`: `function` - Function to get image URL from code
+- `noImageUrl`: `string` - Fallback image URL
+
+### Permission Props
+- `permission`: `string` - Required permission for editing
+- `hasPermission`: `function` - Function to check user permissions
+- `currentCompany`: `string` - Current company identifier
+
+### Customization Props
+- `slot`: `object` - Slot components for customization
+- `slotProps`: `object` - Props for slot components
+- `showError`: `function` - Function to show error messages
 
 ## Customization
 

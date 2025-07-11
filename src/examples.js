@@ -443,6 +443,179 @@ export const FullExampleWithStateManagement = () => {
   );
 };
 
+// Example: Custom Image Selector with Slots
+export const CustomSelectorExample = () => {
+  const [images, setImages] = useState(['custom1', 'custom2']);
+
+  // Custom Image Selector Component
+  const CustomImageSelector = ({ 
+    afterUpload, 
+    activate, 
+    onCancel, 
+    multiple, 
+    title, 
+    uploadMessage,
+    maxFileSize,
+    customStyles,
+    theme = 'blue'
+  }) => {
+    const [dragOver, setDragOver] = useState(false);
+    
+    const handleFileSelect = async (files) => {
+      const fileArray = Array.from(files);
+      
+      // Simulate upload process
+      for (const file of fileArray) {
+        if (file.size > maxFileSize) {
+          alert(`File ${file.name} is too large. Maximum size: ${maxFileSize / 1024 / 1024}MB`);
+          continue;
+        }
+        
+        // Simulate API call
+        const result = {
+          success: true,
+          data: { code: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}` },
+          message: 'Image uploaded successfully'
+        };
+        
+        afterUpload(result);
+      }
+    };
+
+    const themeColors = {
+      blue: { primary: '#007bff', secondary: '#e3f2fd' },
+      green: { primary: '#28a745', secondary: '#e8f5e8' },
+      purple: { primary: '#6f42c1', secondary: '#f3e5f5' }
+    };
+
+    const currentTheme = themeColors[theme] || themeColors.blue;
+
+    return (
+      <Box
+        sx={{
+          ...customStyles,
+          border: `2px dashed ${dragOver ? currentTheme.primary : '#ccc'}`,
+          borderRadius: '12px',
+          padding: '40px',
+          textAlign: 'center',
+          backgroundColor: dragOver ? currentTheme.secondary : '#f8f9fa',
+          transition: 'all 0.3s ease',
+          cursor: 'pointer',
+          position: 'relative'
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragOver(false);
+          handleFileSelect(e.dataTransfer.files);
+        }}
+      >
+        <Typography variant="h5" gutterBottom color={currentTheme.primary}>
+          {title}
+        </Typography>
+        
+        <Typography variant="body1" color="text.secondary" paragraph>
+          {uploadMessage}
+        </Typography>
+        
+        <Typography variant="caption" display="block" color="text.secondary" sx={{ mb: 2 }}>
+          Maximum file size: {maxFileSize / 1024 / 1024}MB | Theme: {theme}
+        </Typography>
+        
+        <input
+          type="file"
+          multiple={multiple}
+          accept="image/*"
+          onChange={(e) => handleFileSelect(e.target.files)}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            opacity: 0,
+            cursor: 'pointer'
+          }}
+        />
+        
+        <Button 
+          variant="contained" 
+          sx={{ 
+            mr: 2, 
+            backgroundColor: currentTheme.primary,
+            '&:hover': { backgroundColor: currentTheme.primary, opacity: 0.8 }
+          }}
+        >
+          Choose Files
+        </Button>
+        
+        <Button variant="outlined" onClick={onCancel}>
+          Cancel
+        </Button>
+      </Box>
+    );
+  };
+
+  const handleCustomUpload = useCallback(async (imageData) => {
+    console.log('Custom upload data:', imageData);
+    
+    // Simulate API response
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          success: true,
+          data: imageData.data,
+          message: 'Custom upload successful'
+        });
+      }, 500);
+    });
+  }, []);
+
+  const refreshCustomGallery = useCallback((result) => {
+    setImages(prev => [...prev, result.data.code]);
+  }, []);
+
+  return (
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Custom Image Selector with Slots
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        This example demonstrates how to use the slot system to provide a custom image selector with enhanced UI and functionality.
+      </Typography>
+      
+      <GoalImageGallery
+        imageCodes={images}
+        canEdit={true}
+        ownerEntity={{ id: 'custom-selector-gallery', type: 'gallery' }}
+        imageHandlerApi={handleCustomUpload}
+        afterUpload={refreshCustomGallery}
+        multiple={true}
+        emptyMessage="Custom selector gallery - upload with style!"
+        showImageInfo={true}
+        allowDownload={true}
+        slot={{
+          selector: CustomImageSelector
+        }}
+        slotProps={{
+          selector: {
+            maxFileSize: 5 * 1024 * 1024, // 5MB
+            theme: 'blue',
+            customStyles: {
+              minHeight: '200px',
+              margin: '20px 0'
+            }
+          }
+        }}
+      />
+    </Box>
+  );
+};
+
 // Complete Demo Component
 export const GoalImageGalleryExamples = () => {
   return (
@@ -473,6 +646,9 @@ export const GoalImageGalleryExamples = () => {
       <Divider sx={{ my: 3 }} />
 
       <FullExampleWithStateManagement />
+      <Divider sx={{ my: 3 }} />
+
+      <CustomSelectorExample />
     </Box>
   );
 };
