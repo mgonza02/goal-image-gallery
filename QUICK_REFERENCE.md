@@ -113,16 +113,11 @@ const handleImageUpload = async (imageData) => {
   afterUpload={refreshProduct}
   multiple={true}
   showImageInfo={true}
-/>
-```
-
-### User Avatar
-```javascript
-<GoalImageGallery
-  imageCodes={[user.avatar]}
-  canEdit={isOwner}
-  ownerEntity={{ id: user.id, type: 'user' }}
-  imageHandlerApi={userApi.uploadAvatar}
+  slot = {    selector: SelectorComponent  }
+  slotProps = {
+        // Props for the slot component
+        // e.g. { customProp: 'value' },
+  }
   afterUpload={refreshUser}
   multiple={false}
   emptyMessage="No avatar set"

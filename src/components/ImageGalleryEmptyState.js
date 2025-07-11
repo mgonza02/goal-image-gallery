@@ -6,14 +6,19 @@ import {
   CloudUpload as UploadIcon,
   ContentPaste as PasteIcon,
   Link as LinkIcon,
-  Add as AddIcon,
+  Add as AddIcon
 } from '@mui/icons-material';
 import { StyledEmptyStateContainer } from '../styles/styled-components';
 
 /**
  * Empty state component for image gallery
  */
-const ImageGalleryEmptyState = ({ emptyMessage, updatable, clipboardSupported, onAddImage }) => {
+const ImageGalleryEmptyState = ({
+  emptyMessage,
+  updatable = false,
+  clipboardSupported = false,
+  onAddImage = () => {}
+}) => {
   return (
     <StyledEmptyStateContainer>
       <Stack spacing={3} alignItems="center">
@@ -70,13 +75,7 @@ ImageGalleryEmptyState.propTypes = {
   emptyMessage: PropTypes.string.isRequired,
   updatable: PropTypes.bool,
   clipboardSupported: PropTypes.bool,
-  onAddImage: PropTypes.func,
-};
-
-ImageGalleryEmptyState.defaultProps = {
-  updatable: false,
-  clipboardSupported: false,
-  onAddImage: () => {},
+  onAddImage: PropTypes.func
 };
 
 export default ImageGalleryEmptyState;

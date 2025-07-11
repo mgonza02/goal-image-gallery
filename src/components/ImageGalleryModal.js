@@ -11,20 +11,20 @@ import {
   Tooltip,
   Box,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import {
   Close as CloseIcon,
   ZoomIn as ZoomInIcon,
   ZoomOut as ZoomOutIcon,
   ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
+  ChevronRight as ChevronRightIcon
 } from '@mui/icons-material';
 import {
   StyledModalContainer,
   StyledModalHeader,
   StyledModalBody,
-  StyledModalFooter,
+  StyledModalFooter
 } from '../styles/styled-components';
 import { handleImageError } from '../utils/image-utils';
 
@@ -42,7 +42,7 @@ const ImageGalleryModal = ({
   onZoomIn,
   onZoomOut,
   onPreviousImage,
-  onNextImage,
+  onNextImage
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -56,8 +56,8 @@ const ImageGalleryModal = ({
       slotProps={{
         backdrop: {
           timeout: 500,
-          sx: { backgroundColor: 'rgba(0, 0, 0, 0.9)' },
-        },
+          sx: { backgroundColor: 'rgba(0, 0, 0, 0.9)' }
+        }
       }}
     >
       <Zoom in={open}>
@@ -97,7 +97,7 @@ const ImageGalleryModal = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: zoomLevel > 1 ? 'auto' : 'hidden',
-                p: 2,
+                p: 2
               }}
             >
               <img
@@ -112,9 +112,9 @@ const ImageGalleryModal = ({
                   transform: `scale(${zoomLevel})`,
                   transition: 'transform 0.2s ease-in-out',
                   borderRadius: 8,
-                  display: 'block',
+                  display: 'block'
                 }}
-                onError={e => handleImageError(e, noImageUrl)}
+                onError={(e) => handleImageError(e, noImageUrl)}
               />
             </Box>
           </StyledModalBody>
@@ -156,11 +156,6 @@ ImageGalleryModal.propTypes = {
   onZoomIn: PropTypes.func.isRequired,
   onZoomOut: PropTypes.func.isRequired,
   onPreviousImage: PropTypes.func.isRequired,
-  onNextImage: PropTypes.func.isRequired,
+  onNextImage: PropTypes.func.isRequired
 };
-
-ImageGalleryModal.defaultProps = {
-  imageUrl: null,
-};
-
 export default ImageGalleryModal;

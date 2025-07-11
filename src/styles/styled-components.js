@@ -12,16 +12,16 @@ export const StyledImageContainer = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   cursor: 'pointer',
   transition: theme.transitions.create(['border-color', 'box-shadow', 'transform'], {
-    duration: theme.transitions.duration.short,
+    duration: theme.transitions.duration.short
   }),
   '&:hover': {
     borderColor: theme.palette.primary.main,
     boxShadow: theme.shadows[4],
     transform: 'translateY(-2px)',
     '& .image-overlay': {
-      opacity: 1,
-    },
-  },
+      opacity: 1
+    }
+  }
 }));
 
 /**
@@ -39,16 +39,16 @@ export const ImageOverlay = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   opacity: 0,
   transition: theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.short,
+    duration: theme.transitions.duration.short
   }),
   '& .MuiIconButton-root': {
     color: theme.palette.common.white,
     backgroundColor: alpha(theme.palette.common.black, 0.7),
     margin: theme.spacing(0.5),
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.black, 0.9),
-    },
-  },
+      backgroundColor: alpha(theme.palette.common.black, 0.9)
+    }
+  }
 }));
 
 /**
@@ -56,8 +56,6 @@ export const ImageOverlay = styled(Box)(({ theme }) => ({
  */
 export const StyledModalContainer = styled(Box)(({ theme, isMobile }) => ({
   position: 'absolute',
-  top: '50%',
-  left: '50%',
   transform: 'translate(-50%, -50%)',
   width: isMobile ? '95vw' : '90vw',
   maxWidth: 1200,
@@ -67,7 +65,7 @@ export const StyledModalContainer = styled(Box)(({ theme, isMobile }) => ({
   overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
-  boxShadow: 24,
+  boxShadow: 24
 }));
 
 /**
@@ -79,7 +77,7 @@ export const StyledModalHeader = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2),
   borderBottom: `1px solid ${theme.palette.divider}`,
-  backgroundColor: alpha(theme.palette.background.paper, 0.95),
+  backgroundColor: alpha(theme.palette.background.paper, 0.95)
 }));
 
 /**
@@ -92,7 +90,7 @@ export const StyledModalBody = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   overflow: 'hidden',
   position: 'relative',
-  backgroundColor: theme.palette.grey[50],
+  backgroundColor: theme.palette.grey[50]
 }));
 
 /**
@@ -104,7 +102,7 @@ export const StyledModalFooter = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2),
   borderTop: `1px solid ${theme.palette.divider}`,
-  backgroundColor: alpha(theme.palette.background.paper, 0.95),
+  backgroundColor: alpha(theme.palette.background.paper, 0.95)
 }));
 
 /**
@@ -116,7 +114,7 @@ export const StyledEmptyStateContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(2),
-  minHeight: 300,
+  minHeight: 300
 }));
 
 /**
@@ -128,5 +126,5 @@ export const StyledImageGridContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(2),
-  minHeight: 200,
+  minHeight: 200
 }));

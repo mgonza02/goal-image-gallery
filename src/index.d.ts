@@ -17,6 +17,8 @@ export interface GoalImageGalleryProps {
   showError?: (message: string) => void;
   hasPermission?: (permission: string) => boolean;
   currentCompany?: string;
+  slot?: Object; // Slot component for custom rendering
+  slotProps?: Object; // Props for the slot component
 }
 
 // Image item interface

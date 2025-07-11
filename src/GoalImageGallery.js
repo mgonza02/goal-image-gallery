@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
-import ImageGalleryGrid from './components/ImageGalleryGrid';
-import ImageGalleryModal from './components/ImageGalleryModal';
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
+import ImageGalleryGrid from "./components/ImageGalleryGrid";
+import ImageGalleryModal from "./components/ImageGalleryModal";
 import {
   useImageGallery,
   useImageZoom,
   useClipboard,
-  useKeyboardNavigation
-} from './hooks/use-image-gallery';
-import { downloadImage } from './utils/image-utils';
+  useKeyboardNavigation,
+} from "./hooks/use-image-gallery";
+import { downloadImage } from "./utils/image-utils";
 
 /**
  * Enhanced GoalImageGallery Component
@@ -62,19 +62,23 @@ const GoalImageGallery = ({
   imageCodes,
   multiple = false,
   permission,
-  emptyMessage = 'No hay imágenes para mostrar',
+  emptyMessage = "No hay imágenes para mostrar",
   showImageInfo = false,
   allowDownload = false,
   getImageUrl = ({ imageCode }) => `/images/${imageCode}`,
-  noImageUrl = '/images/no-image.png',
+  noImageUrl = "/images/no-image.png",
   showError = (message) => console.error(message),
   hasPermission = () => true,
-  currentCompany = 'default'
+  currentCompany = "default",
+  slot = {},
+  slotProps = {},
 }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [updatable, setUpdatable] = useState(false);
+  const { selector: ImageSelector } = slot;
+  const { selector: imageSelectorProps } = slotProps;
 
   // Initialize permissions
   useEffect(() => {
@@ -98,7 +102,7 @@ const GoalImageGallery = ({
     handleImageSelect,
     handleCancel,
     handleRemoveImage,
-    handleAfterUpload
+    handleAfterUpload,
   } = useImageGallery({
     imageCodes,
     multiple,
@@ -108,14 +112,16 @@ const GoalImageGallery = ({
     ownerEntity,
     currentCompany,
     onRefresh,
-    showError
+    showError,
   });
 
   // Zoom and navigation handlers
-  const { handleZoomIn, handleZoomOut, handlePreviousImage, handleNextImage } = useImageZoom(
-    getImageUrl,
-    imageList
-  );
+  const {
+    handleZoomIn,
+    handleZoomOut,
+    handlePreviousImage,
+    handleNextImage,
+  } = useImageZoom(getImageUrl, imageList);
 
   // Enhanced zoom handlers that update the main state
   const handleZoomInEnhanced = () => {
@@ -152,13 +158,17 @@ const GoalImageGallery = ({
   const handlePasteImage = (file) => {
     handleImageSelect(null);
     setTimeout(() => {
-      const event = new CustomEvent('pasteImage', { detail: { file } });
+      const event = new CustomEvent("pasteImage", { detail: { file } });
       window.dispatchEvent(event);
     }, 100);
   };
 
   // Clipboard support
-  const { clipboardSupported } = useClipboard(updatable, selectingImage, handlePasteImage);
+  const { clipboardSupported } = useClipboard(
+    updatable,
+    selectingImage,
+    handlePasteImage
+  );
 
   // Keyboard navigation
   useKeyboardNavigation(
@@ -172,21 +182,37 @@ const GoalImageGallery = ({
 
   // Show image selector if needed
   if (updatable && (selectingImage || !imageList || imageList.length === 0)) {
-    return (
-      <div style={{ 
-        padding: '20px', 
-        border: '2px dashed #ccc', 
-        textAlign: 'center', 
-        borderRadius: '8px',
-        backgroundColor: '#f5f5f5'
-      }}>
-        <p>{multiple ? 'Seleccionar Imágenes' : 'Seleccionar Imagen'}</p>
-        <p style={{ color: '#666', fontSize: '14px' }}>
+    return ImageSelector ? (
+      <ImageSelector
+        afterUpload={handleAfterUpload}
+        activate={selectingImage}
+        onCancel={handleCancel}
+        multiple={multiple}
+        title={multiple ? "Seleccionar Imágenes" : "Seleccionar Imagen"}
+        uploadMessage={
+          multiple
+            ? "Arrastra imágenes aquí o haz clic para seleccionar"
+            : "Arrastra una imagen aquí o haz clic para seleccionar"
+        }
+        {...imageSelectorProps}
+      />
+    ) : (
+      <div
+        style={{
+          padding: "20px",
+          border: "2px dashed #ccc",
+          textAlign: "center",
+          borderRadius: "8px",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
+        <p>{multiple ? "Seleccionar Imágenes" : "Seleccionar Imagen"}</p>
+        <p style={{ color: "#666", fontSize: "14px" }}>
           {multiple
-            ? 'Arrastra imágenes aquí o haz clic para seleccionar'
-            : 'Arrastra una imagen aquí o haz clic para seleccionar'}
+            ? "Arrastra imágenes aquí o haz clic para seleccionar"
+            : "Arrastra una imagen aquí o haz clic para seleccionar"}
         </p>
-        <button onClick={handleCancel} style={{ marginTop: '10px' }}>
+        <button onClick={handleCancel} style={{ marginTop: "10px" }}>
           Cancelar
         </button>
       </div>
@@ -245,7 +271,9 @@ GoalImageGallery.propTypes = {
   noImageUrl: PropTypes.string,
   showError: PropTypes.func,
   hasPermission: PropTypes.func,
-  currentCompany: PropTypes.string
+  currentCompany: PropTypes.string,
+  slot: PropTypes.object,
+  slotProps: PropTypes.object,
 };
 
 export default GoalImageGallery;

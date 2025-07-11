@@ -13,19 +13,19 @@ import { getGridColumns } from '../utils/image-utils';
 const ImageGalleryGrid = ({
   imageList,
   emptyMessage,
-  multiple,
-  updatable,
-  removable,
-  allowDownload,
-  showImageInfo,
-  loading,
-  clipboardSupported,
+  multiple = false,
+  updatable = false,
+  removable = false,
+  allowDownload = false,
+  showImageInfo = false,
+  loading = false,
+  clipboardSupported = false,
   getImageUrl,
   noImageUrl,
   onImageClick,
   onImageSelect,
   onRemoveImage,
-  onDownloadImage,
+  onDownloadImage
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -97,17 +97,7 @@ ImageGalleryGrid.propTypes = {
   onImageClick: PropTypes.func.isRequired,
   onImageSelect: PropTypes.func.isRequired,
   onRemoveImage: PropTypes.func.isRequired,
-  onDownloadImage: PropTypes.func.isRequired,
-};
-
-ImageGalleryGrid.defaultProps = {
-  multiple: false,
-  updatable: false,
-  removable: false,
-  allowDownload: false,
-  showImageInfo: false,
-  loading: false,
-  clipboardSupported: false,
+  onDownloadImage: PropTypes.func.isRequired
 };
 
 export default ImageGalleryGrid;
