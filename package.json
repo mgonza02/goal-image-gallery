@@ -1,6 +1,6 @@
 {
     "name": "@mgonza02/goal-image-gallery",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "description": "Advanced, accessible, and highly customizable React image gallery component with multi-method upload, responsive design, and extensive TypeScript support",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -33,6 +33,7 @@
     "files": [
         "lib/",
         "README.md",
+        "CHANGELOG.md",
         "QUICK_REFERENCE.md",
         "MIGRATION.md",
         "IMPLEMENTATION_GUIDE.md",
