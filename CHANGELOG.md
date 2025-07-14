@@ -5,6 +5,16 @@ All notable changes to the GoalImageGallery project will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2025-07-14
+### 🧹 Bug fix
+- Fixed an issue with clipboard support detection in the `use-image-gallery` hook.
+- Updated the `GoalImageGallery` component to ensure clipboard support is correctly passed as a prop.
+- Removed unused clipboard support prop from the component to avoid confusion.
+- Ensured consistent handling of clipboard support across all components.
+
+
+
+
 ## [1.0.6] - 2025-07-11
 
 ### 🧹 Optimization & Cleanup
