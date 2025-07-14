@@ -229,7 +229,7 @@ const GoalImageGallery = ({
   noImageUrl = "/images/no-image.png",
   showError = (message) => console.error(message),
   hasPermission = () => true,
-  currentCompany = "default",
+  currentCompany =  0,
   slot = {},
   slotProps = {},
 }) => {
@@ -431,7 +431,7 @@ GoalImageGallery.propTypes = {
   noImageUrl: PropTypes.string,
   showError: PropTypes.func,
   hasPermission: PropTypes.func,
-  currentCompany: PropTypes.string,
+  currentCompany: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   slot: PropTypes.object,
   slotProps: PropTypes.object,
 };
