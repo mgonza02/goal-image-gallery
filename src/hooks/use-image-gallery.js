@@ -25,7 +25,9 @@ export const useImageGallery = ({
 
   // Process image codes into image list
   useEffect(() => {
-    const splitedImages = Array.isArray(imageCodes) ? imageCodes : imageCodes?.split(/[\s,]+/);
+    const splitedImages = Array.isArray(imageCodes)
+      ? imageCodes
+      : (imageCodes || '')?.split(/[\s,]+/);
     let newList = [];
 
     if (splitedImages) {
