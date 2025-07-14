@@ -201,7 +201,7 @@ export const useClipboard = (updatable, selectingImage, onPasteImage) => {
   const [clipboardSupported, setClipboardSupported] = useState(false);
 
   useEffect(() => {
-    setClipboardSupported(navigator.clipboard);
+    setClipboardSupported(!!navigator.clipboard);
   }, []);
 
   useEffect(() => {
