@@ -1,11 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Card, CardContent, useMediaQuery } from '@mui/material';
+import { Grid, Card, CardContent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ImageGalleryItem from './ImageGalleryItem';
 import ImageGalleryEmptyState from './ImageGalleryEmptyState';
 import { StyledImageGridContainer } from '../styles/styled-components';
-import { getGridColumns } from '../utils/image-utils';
 
 /**
  * Image grid component for displaying gallery images
@@ -28,8 +26,6 @@ const ImageGalleryGrid = ({
   onDownloadImage
 }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
 
   if (imageList.length === 0) {
     return (
@@ -54,8 +50,11 @@ const ImageGalleryGrid = ({
             {imageList.map((image, index) => (
               <Grid
                 key={image.id}
-                item
-                xs={getGridColumns(isMobile, isTablet, multiple)}
+                size={{
+                  xs: 6,
+                  sm: multiple ? 4 : 6,
+                  md: multiple ? 3 : 4
+                }}
                 sx={{ position: 'relative' }}
               >
                 <ImageGalleryItem

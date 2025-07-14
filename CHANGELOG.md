@@ -5,6 +5,18 @@ All notable changes to the GoalImageGallery project will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-07-14
+
+### 🐛 Bug Fixes
+- **Fixed handleAfterUpload Array Structure**: Resolved issue where `handleAfterUpload` was creating nested arrays instead of flat arrays for `image_code` parameter
+- **Improved Array Handling**: Enhanced logic to properly handle both single image replacement and bulk image addition scenarios
+- **Better Code Organization**: Refactored `handleAfterUpload` method for clearer logic flow and better maintainability
+
+### 🔧 Technical Improvements
+- **Clearer Logic Separation**: Separated replacement logic from addition logic for better code readability
+- **Duplicate Prevention**: Enhanced duplicate checking to prevent adding the same image code multiple times
+- **Array Flattening**: Fixed array structure to ensure `image_code` is always a flat array of strings
+
 ## [1.0.9] - 2025-07-14
 
 ### ✨ New Features

@@ -234,7 +234,6 @@ const GoalImageGallery = ({
   slotProps = {},
 }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [updatable, setUpdatable] = useState(false);
   const { selector: ImageSelector } = slot;
@@ -252,7 +251,6 @@ const GoalImageGallery = ({
     selectedImageIndex,
     selectingImage,
     imageList,
-    selectedImage,
     zoomLevel,
     loading,
     removable,
@@ -277,8 +275,6 @@ const GoalImageGallery = ({
 
   // Zoom and navigation handlers
   const {
-    handleZoomIn,
-    handleZoomOut,
     handlePreviousImage,
     handleNextImage,
   } = useImageZoom(getImageUrl, imageList);

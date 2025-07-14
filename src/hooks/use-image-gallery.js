@@ -119,28 +119,42 @@ export const useImageGallery = ({
       // Handle both single image and array of images
       const imagesArray = Array.isArray(uploadedImages) ? uploadedImages : [uploadedImages];
 
-      const imagesToSave = imageList.reduce((acc, img) => {
-        if (img.image_code !== '+') {
-          // If this is the image being replaced, replace with the first uploaded image
-          if (img.image_code === currentImageCode && imagesArray.length > 0) {
-            acc.push(imagesArray[0].code);
-          } else {
+      let imagesToSave = [];
+
+      if (currentImageCode) {
+        // Replacing an existing image
+        imagesToSave = imageList.reduce((acc, img) => {
+          if (img.image_code !== '+') {
+            if (img.image_code === currentImageCode) {
+              // Replace the selected image with the first uploaded image
+              acc.push(imagesArray[0].code);
+            } else {
+              // Keep existing image codes
+              acc.push(img.image_code);
+            }
+          }
+          return acc;
+        }, []);
+
+        // If multiple images uploaded, add the additional ones
+        if (imagesArray.length > 1) {
+          imagesArray.slice(1).forEach((image) => {
+            if (!imagesToSave.includes(image.code)) {
+              imagesToSave.push(image.code);
+            }
+          });
+        }
+      } else {
+        // Adding new images (no current selection)
+        imagesToSave = imageList.reduce((acc, img) => {
+          if (img.image_code !== '+') {
             acc.push(img.image_code);
           }
-        }
-        return acc;
-      }, []);
+          return acc;
+        }, []);
 
-      // If no current image code (adding new images), add all new image codes
-      if (!currentImageCode) {
+        // Add all new image codes
         imagesArray.forEach((image) => {
-          if (!imagesToSave.includes(image.code)) {
-            imagesToSave.push(image.code);
-          }
-        });
-      } else if (imagesArray.length > 1) {
-        // If replacing and multiple images uploaded, add additional images
-        imagesArray.slice(1).forEach((image) => {
           if (!imagesToSave.includes(image.code)) {
             imagesToSave.push(image.code);
           }
