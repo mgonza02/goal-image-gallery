@@ -1099,6 +1099,20 @@ When contributing to this component:
 3. Update documentation
 4. Test accessibility features
 5. Verify mobile responsiveness
+6. Update [CHANGELOG.md](CHANGELOG.md) with your changes
+
+## Version History & Changelog
+
+For detailed information about changes, new features, and updates across versions, see [CHANGELOG.md](CHANGELOG.md).
+
+### Recent Updates
+- **v1.0.6**: Major package cleanup and optimization
+- **v1.0.5**: Initial package review and dependency analysis
+- **v1.0.4**: Comprehensive documentation overhaul
+- **v1.0.3**: NPM publication and scoped package setup
+- **v1.0.2**: Slot system implementation and UI enhancements
+- **v1.0.1**: Bug fixes and stability improvements
+- **v1.0.0**: Initial release with core features
 
 ## License
 
