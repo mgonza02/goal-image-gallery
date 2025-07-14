@@ -34,6 +34,15 @@ export interface ImageItem {
   image_code: string;
 }
 
+// Uploaded image interface
+export interface UploadedImage {
+  code: string;
+  url?: string;
+  filename?: string;
+  size?: number;
+  mimeType?: string;
+}
+
 // Hook interfaces
 export interface UseImageGalleryOptions {
   imageCodes?: string | string[];
@@ -62,7 +71,7 @@ export interface UseImageGalleryReturn {
   handleImageSelect: (image: ImageItem | null) => void;
   handleCancel: () => void;
   handleRemoveImage: (image: ImageItem) => Promise<void>;
-  handleAfterUpload: (image: any) => Promise<void>;
+  handleAfterUpload: (images: UploadedImage | UploadedImage[]) => Promise<void>;
 }
 
 export interface UseImageZoomReturn {

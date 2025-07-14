@@ -1,7 +1,7 @@
 // GoalImageGallery Usage Examples
 // This file demonstrates various ways to use the GoalImageGallery component
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Box, Typography, Button, Divider } from '@mui/material';
 import GoalImageGallery from './GoalImageGallery';
 
@@ -616,6 +616,185 @@ export const CustomSelectorExample = () => {
   );
 };
 
+// Example 9: Bulk Upload Gallery
+export const BulkUploadExample = () => {
+  const [galleryImages, setGalleryImages] = useState(['bulk1', 'bulk2']);
+  const [uploading, setUploading] = useState(false);
+  const currentCompany = 'bulk-company';
+
+  const handleBulkUpload = useCallback(async (imageData) => {
+    setUploading(true);
+    
+    try {
+      // Simulate bulk upload API call
+      const response = await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            success: true,
+            data: { code: `bulk-${Date.now()}` },
+            message: 'Bulk upload completed successfully'
+          });
+        }, 1000);
+      });
+
+      return response;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      };
+    } finally {
+      setUploading(false);
+    }
+  }, []);
+
+  const handleBulkRefresh = useCallback((result) => {
+    setGalleryImages(prev => [...prev, result.data.code]);
+  }, []);
+
+  // Custom bulk upload component
+  const BulkUploadSelector = ({ afterUpload, activate, onCancel, multiple }) => {
+    const [dragActive, setDragActive] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const fileInputRef = useRef(null);
+
+    const handleDrag = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        setDragActive(true);
+      } else if (e.type === 'dragleave') {
+        setDragActive(false);
+      }
+    };
+
+    const handleDrop = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setDragActive(false);
+      
+      const files = Array.from(e.dataTransfer.files);
+      handleFiles(files);
+    };
+
+    const handleFiles = async (files) => {
+      const imageFiles = files.filter(file => file.type.startsWith('image/'));
+      setSelectedFiles(imageFiles);
+
+      if (imageFiles.length > 0) {
+        // Simulate uploading multiple files and getting their codes
+        const uploadPromises = imageFiles.map(async (file, index) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                code: `bulk-img-${Date.now()}-${index}`,
+                url: URL.createObjectURL(file),
+                filename: file.name,
+                size: file.size,
+                mimeType: file.type
+              });
+            }, 500 + index * 100);
+          });
+        });
+
+        const uploadedImages = await Promise.all(uploadPromises);
+        
+        // Call afterUpload with array of images
+        await afterUpload(uploadedImages);
+      }
+    };
+
+    const handleFileSelect = () => {
+      fileInputRef.current?.click();
+    };
+
+    return (
+      <Box
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+        sx={{
+          border: `2px dashed ${dragActive ? '#007bff' : '#ccc'}`,
+          borderRadius: '12px',
+          padding: '40px',
+          textAlign: 'center',
+          backgroundColor: dragActive ? '#f8f9fa' : '#fff',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            borderColor: '#007bff',
+            backgroundColor: '#f8f9fa'
+          }
+        }}
+        onClick={handleFileSelect}
+      >
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={(e) => handleFiles(Array.from(e.target.files))}
+        />
+        
+        <Typography variant="h6" gutterBottom>
+          Bulk Upload Images
+        </Typography>
+        <Typography variant="body2" color="text.secondary" paragraph>
+          Drop multiple images here or click to select
+        </Typography>
+        
+        {selectedFiles.length > 0 && (
+          <Typography variant="body2" color="success.main">
+            {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} selected
+          </Typography>
+        )}
+        
+        <Button
+          variant="contained"
+          sx={{ mt: 2, mr: 1 }}
+          disabled={uploading}
+        >
+          {uploading ? 'Uploading...' : 'Select Files'}
+        </Button>
+        
+        <Button variant="outlined" onClick={onCancel}>
+          Cancel
+        </Button>
+      </Box>
+    );
+  };
+
+  return (
+    <Box sx={{ p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Bulk Upload Gallery
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        This example demonstrates bulk upload functionality where multiple images can be uploaded at once.
+        The handleAfterUpload method now accepts arrays of image objects.
+      </Typography>
+      
+      <GoalImageGallery
+        imageCodes={galleryImages}
+        canEdit={true}
+        ownerEntity={{ id: 'bulk-gallery', type: 'gallery' }}
+        imageHandlerApi={handleBulkUpload}
+        afterUpload={handleBulkRefresh}
+        multiple={true}
+        emptyMessage="Bulk upload gallery - drop multiple images to upload!"
+        showImageInfo={true}
+        allowDownload={true}
+        currentCompany={currentCompany}
+        slot={{
+          selector: BulkUploadSelector
+        }}
+      />
+    </Box>
+  );
+};
+
 // Complete Demo Component
 export const GoalImageGalleryExamples = () => {
   return (
@@ -649,6 +828,9 @@ export const GoalImageGalleryExamples = () => {
       <Divider sx={{ my: 3 }} />
 
       <CustomSelectorExample />
+      <Divider sx={{ my: 3 }} />
+
+      <BulkUploadExample />
     </Box>
   );
 };

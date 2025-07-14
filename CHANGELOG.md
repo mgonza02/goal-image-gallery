@@ -5,6 +5,20 @@ All notable changes to the GoalImageGallery project will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.9] - 2025-07-14
+
+### ✨ New Features
+- **Enhanced Bulk Upload Support**: The `handleAfterUpload` method now fully supports arrays of images
+- **Comprehensive Bulk Upload Example**: Added detailed bulk upload example with drag-and-drop functionality
+- **Improved Documentation**: Updated examples to demonstrate array-based upload patterns
+- **Better TypeScript Support**: Enhanced type definitions for bulk upload scenarios
+
+### 🔧 Improvements
+- Enhanced examples.js with a complete bulk upload gallery demonstration
+- Added custom bulk upload selector component with drag-and-drop support
+- Improved documentation for array-based `handleAfterUpload` usage
+- Better error handling and progress indication for bulk uploads
+
 ## [1.0.8] - 2025-07-14
 
 ### 🧹 Bug Fixes

@@ -105,25 +105,53 @@ export const useImageGallery = ({
     [ownerEntity, currentCompany, imageList, onRefresh, showError, imageHandlerApi]
   );
 
+  /**
+   * Handles the upload completion for single or multiple images
+   * @param {Object|Object[]} uploadedImages - Single image object or array of image objects
+   * @param {string} uploadedImages.code - The image code returned from the upload
+   * @param {string} [uploadedImages.url] - Optional image URL
+   * @param {string} [uploadedImages.filename] - Optional filename
+   */
   const handleAfterUpload = useCallback(
-    async (image) => {
+    async (uploadedImages) => {
       const currentImageCode = selectedImage?.image_code || '';
+
+      // Handle both single image and array of images
+      const imagesArray = Array.isArray(uploadedImages) ? uploadedImages : [uploadedImages];
+
       const imagesToSave = imageList.reduce((acc, img) => {
         if (img.image_code !== '+') {
-          acc.push(img.image_code === currentImageCode ? image.code : img.image_code);
+          // If this is the image being replaced, replace with the first uploaded image
+          if (img.image_code === currentImageCode && imagesArray.length > 0) {
+            acc.push(imagesArray[0].code);
+          } else {
+            acc.push(img.image_code);
+          }
         }
         return acc;
       }, []);
 
+      // If no current image code (adding new images), add all new image codes
       if (!currentImageCode) {
-        imagesToSave.push(image.code);
+        imagesArray.forEach((image) => {
+          if (!imagesToSave.includes(image.code)) {
+            imagesToSave.push(image.code);
+          }
+        });
+      } else if (imagesArray.length > 1) {
+        // If replacing and multiple images uploaded, add additional images
+        imagesArray.slice(1).forEach((image) => {
+          if (!imagesToSave.includes(image.code)) {
+            imagesToSave.push(image.code);
+          }
+        });
       }
 
       const result = await imageHandlerApi({
         ...ownerEntity,
         companyId: currentCompany,
-        image_code: imagesToSave,
-        company_id: currentCompany
+        company_id: currentCompany,
+        image_code: imagesToSave
       });
 
       if (result.success) {
