@@ -5,6 +5,15 @@ All notable changes to the GoalImageGallery project will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-07-14
+### 🐛 Bug Fixes
+- **Fixed Image Gallery Modal**: Resolved issues with the image gallery modal not displaying correctly
+- **Improved Image Handling**: Enhanced image error handling and loading states
+- **Modal Responsiveness**: Ensured the modal is fully responsive and adapts to different screen sizes
+- **Accessibility Improvements**: Enhanced keyboard navigation and ARIA attributes for better accessibility
+- **Code Cleanup**: Removed unused imports and optimized component structure
+- **Remove styled-components**: Replaced styled-components with MUI's Box component for better consistency
+
 ## [1.1.0] - 2025-07-14
 
 ### 🐛 Bug Fixes

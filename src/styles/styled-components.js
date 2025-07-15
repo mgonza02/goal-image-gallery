@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
 
 /**
- * Styled component for image containers with enhanced hover effects
+ * Styles for image containers with enhanced hover effects
  */
-export const StyledImageContainer = styled(Box)(({ theme }) => ({
+export const getImageContainerStyles = (theme) => ({
   position: 'relative',
   borderRadius: theme.spacing(1.5),
   overflow: 'hidden',
@@ -22,12 +22,12 @@ export const StyledImageContainer = styled(Box)(({ theme }) => ({
       opacity: 1
     }
   }
-}));
+});
 
 /**
- * Styled component for image overlay with action buttons
+ * Styles for image overlay with action buttons
  */
-export const ImageOverlay = styled(Box)(({ theme }) => ({
+export const getImageOverlayStyles = (theme) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -49,12 +49,12 @@ export const ImageOverlay = styled(Box)(({ theme }) => ({
       backgroundColor: alpha(theme.palette.common.black, 0.9)
     }
   }
-}));
+});
 
 /**
- * Styled component for modal container
+ * Styles for modal container
  */
-export const StyledModalContainer = styled(Box)(({ theme, isMobile }) => ({
+export const getModalContainerStyles = (theme, isMobile) => ({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%) !important',
@@ -68,24 +68,24 @@ export const StyledModalContainer = styled(Box)(({ theme, isMobile }) => ({
   display: 'flex',
   flexDirection: 'column',
   boxShadow: 24
-}));
+});
 
 /**
- * Styled component for modal header
+ * Styles for modal header
  */
-export const StyledModalHeader = styled(Box)(({ theme }) => ({
+export const getModalHeaderStyles = (theme) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: theme.spacing(2),
   borderBottom: `1px solid ${theme.palette.divider}`,
   backgroundColor: alpha(theme.palette.background.paper, 0.95)
-}));
+});
 
 /**
- * Styled component for modal body
+ * Styles for modal body
  */
-export const StyledModalBody = styled(Box)(({ theme }) => ({
+export const getModalBodyStyles = (theme) => ({
   flex: 1,
   display: 'flex',
   alignItems: 'center',
@@ -93,40 +93,50 @@ export const StyledModalBody = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
   backgroundColor: theme.palette.grey[50]
-}));
+});
 
 /**
- * Styled component for modal footer
+ * Styles for modal footer
  */
-export const StyledModalFooter = styled(Box)(({ theme }) => ({
+export const getModalFooterStyles = (theme) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: theme.spacing(2),
   borderTop: `1px solid ${theme.palette.divider}`,
   backgroundColor: alpha(theme.palette.background.paper, 0.95)
-}));
+});
 
 /**
- * Styled component for empty state container
+ * Styles for empty state container
  */
-export const StyledEmptyStateContainer = styled(Box)(({ theme }) => ({
+export const getEmptyStateContainerStyles = (theme) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(2),
   minHeight: 300
-}));
+});
 
 /**
- * Styled component for image grid container
+ * Styles for image grid container
  */
-export const StyledImageGridContainer = styled(Box)(({ theme }) => ({
+export const getImageGridContainerStyles = (theme) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
   padding: theme.spacing(2),
   minHeight: 200
-}));
+});
+
+// Legacy styled components exports for backward compatibility
+export const StyledImageContainer = Box;
+export const ImageOverlay = Box;
+export const StyledModalContainer = Box;
+export const StyledModalHeader = Box;
+export const StyledModalBody = Box;
+export const StyledModalFooter = Box;
+export const StyledEmptyStateContainer = Box;
+export const StyledImageGridContainer = Box;

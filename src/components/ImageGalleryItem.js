@@ -9,7 +9,7 @@ import {
   Add as AddIcon,
   Delete as DeleteIcon
 } from '@mui/icons-material';
-import { StyledImageContainer, ImageOverlay } from '../styles/styled-components';
+import { getImageContainerStyles, getImageOverlayStyles } from '../styles/styled-components';
 import { handleImageError } from '../utils/image-utils';
 
 /**
@@ -35,8 +35,9 @@ const ImageGalleryItem = ({
   // Handle add button (+) image
   if (image.image_code === '+') {
     return (
-      <StyledImageContainer
+      <Box
         sx={{
+          ...getImageContainerStyles(theme),
           height: 200,
           display: 'flex',
           alignItems: 'center',
@@ -67,12 +68,12 @@ const ImageGalleryItem = ({
         >
           Agregar imagen
         </Button>
-      </StyledImageContainer>
+      </Box>
     );
   }
 
   return (
-    <StyledImageContainer>
+    <Box sx={getImageContainerStyles(theme)}>
       {loading && <Skeleton variant="rectangular" width="100%" height={200} animation="wave" />}
 
       <img
@@ -89,7 +90,7 @@ const ImageGalleryItem = ({
         }}
       />
 
-      <ImageOverlay className="image-overlay">
+      <Box className="image-overlay" sx={getImageOverlayStyles(theme)}>
         <Tooltip title="Ver imagen">
           <IconButton
             size="small"
@@ -146,7 +147,7 @@ const ImageGalleryItem = ({
             </IconButton>
           </Tooltip>
         )}
-      </ImageOverlay>
+      </Box>
 
       {showImageInfo && (
         <Box
@@ -165,7 +166,7 @@ const ImageGalleryItem = ({
           </Typography>
         </Box>
       )}
-    </StyledImageContainer>
+    </Box>
   );
 };
 

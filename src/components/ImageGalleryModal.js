@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Modal,
@@ -21,10 +20,10 @@ import {
   ChevronRight as ChevronRightIcon
 } from '@mui/icons-material';
 import {
-  StyledModalContainer,
-  StyledModalHeader,
-  StyledModalBody,
-  StyledModalFooter
+  getModalContainerStyles,
+  getModalHeaderStyles,
+  getModalBodyStyles,
+  getModalFooterStyles
 } from '../styles/styled-components';
 import { handleImageError } from '../utils/image-utils';
 
@@ -61,9 +60,9 @@ const ImageGalleryModal = ({
       }}
     >
       <Zoom in={open}>
-        <StyledModalContainer isMobile={isMobile}>
+        <Box sx={getModalContainerStyles(theme, isMobile)}>
           {/* Modal Header */}
-          <StyledModalHeader>
+          <Box sx={getModalHeaderStyles(theme)}>
             <Typography variant="h6">
               Imagen {selectedImageIndex + 1} de {imageList.length}
             </Typography>
@@ -85,10 +84,10 @@ const ImageGalleryModal = ({
                 </IconButton>
               </Tooltip>
             </Stack>
-          </StyledModalHeader>
+          </Box>
 
           {/* Modal Body */}
-          <StyledModalBody>
+          <Box sx={getModalBodyStyles(theme)}>
             <Box
               sx={{
                 width: '100%',
@@ -117,11 +116,11 @@ const ImageGalleryModal = ({
                 onError={(e) => handleImageError(e, noImageUrl)}
               />
             </Box>
-          </StyledModalBody>
+          </Box>
 
           {/* Modal Footer */}
           {imageList.length > 1 && (
-            <StyledModalFooter>
+            <Box sx={getModalFooterStyles(theme)}>
               <Tooltip title="Imagen anterior">
                 <IconButton onClick={onPreviousImage} disabled={imageList.length <= 1}>
                   <ChevronLeftIcon />
@@ -137,9 +136,9 @@ const ImageGalleryModal = ({
                   <ChevronRightIcon />
                 </IconButton>
               </Tooltip>
-            </StyledModalFooter>
+            </Box>
           )}
-        </StyledModalContainer>
+        </Box>
       </Zoom>
     </Modal>
   );
