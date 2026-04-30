@@ -277,7 +277,13 @@ export const AdvancedUploadExample = () => {
       <Typography variant="h6" gutterBottom>
         Advanced Upload Methods Demo
       </Typography>
-      <Typography variant="body2" color="text.secondary" paragraph>
+      <Typography
+        variant="body2"
+        paragraph
+        sx={{
+          color: 'text.secondary'
+        }}
+      >
         This gallery supports multiple upload methods:
       </Typography>
       <ul>
@@ -344,7 +350,13 @@ export const MobileGalleryExample = () => {
       <Typography variant="h6" gutterBottom>
         Mobile-Optimized Gallery
       </Typography>
-      <Typography variant="body2" color="text.secondary" paragraph>
+      <Typography
+        variant="body2"
+        paragraph
+        sx={{
+          color: 'text.secondary'
+        }}
+      >
         Optimized for mobile devices with touch-friendly interface
       </Typography>
       <GoalImageGallery
@@ -448,36 +460,36 @@ export const CustomSelectorExample = () => {
   const [images, setImages] = useState(['custom1', 'custom2']);
 
   // Custom Image Selector Component
-  const CustomImageSelector = ({ 
-    afterUpload, 
-    activate, 
-    onCancel, 
-    multiple, 
-    title, 
+  const CustomImageSelector = ({
+    afterUpload,
+    activate,
+    onCancel,
+    multiple,
+    title,
     uploadMessage,
     maxFileSize,
     customStyles,
     theme = 'blue'
   }) => {
     const [dragOver, setDragOver] = useState(false);
-    
+
     const handleFileSelect = async (files) => {
       const fileArray = Array.from(files);
-      
+
       // Simulate upload process
       for (const file of fileArray) {
         if (file.size > maxFileSize) {
           alert(`File ${file.name} is too large. Maximum size: ${maxFileSize / 1024 / 1024}MB`);
           continue;
         }
-        
+
         // Simulate API call
         const result = {
           success: true,
           data: { code: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}` },
           message: 'Image uploaded successfully'
         };
-        
+
         afterUpload(result);
       }
     };
@@ -517,15 +529,25 @@ export const CustomSelectorExample = () => {
         <Typography variant="h5" gutterBottom color={currentTheme.primary}>
           {title}
         </Typography>
-        
-        <Typography variant="body1" color="text.secondary" paragraph>
+        <Typography
+          variant="body1"
+          paragraph
+          sx={{
+            color: 'text.secondary'
+          }}
+        >
           {uploadMessage}
         </Typography>
-        
-        <Typography variant="caption" display="block" color="text.secondary" sx={{ mb: 2 }}>
+        <Typography
+          variant="caption"
+          sx={{
+            display: 'block',
+            color: 'text.secondary',
+            mb: 2
+          }}
+        >
           Maximum file size: {maxFileSize / 1024 / 1024}MB | Theme: {theme}
         </Typography>
-        
         <input
           type="file"
           multiple={multiple}
@@ -541,18 +563,16 @@ export const CustomSelectorExample = () => {
             cursor: 'pointer'
           }}
         />
-        
-        <Button 
-          variant="contained" 
-          sx={{ 
-            mr: 2, 
+        <Button
+          variant="contained"
+          sx={{
+            mr: 2,
             backgroundColor: currentTheme.primary,
             '&:hover': { backgroundColor: currentTheme.primary, opacity: 0.8 }
           }}
         >
           Choose Files
         </Button>
-        
         <Button variant="outlined" onClick={onCancel}>
           Cancel
         </Button>
@@ -562,7 +582,7 @@ export const CustomSelectorExample = () => {
 
   const handleCustomUpload = useCallback(async (imageData) => {
     console.log('Custom upload data:', imageData);
-    
+
     // Simulate API response
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -576,7 +596,7 @@ export const CustomSelectorExample = () => {
   }, []);
 
   const refreshCustomGallery = useCallback((result) => {
-    setImages(prev => [...prev, result.data.code]);
+    setImages((prev) => [...prev, result.data.code]);
   }, []);
 
   return (
@@ -584,10 +604,16 @@ export const CustomSelectorExample = () => {
       <Typography variant="h6" gutterBottom>
         Custom Image Selector with Slots
       </Typography>
-      <Typography variant="body2" color="text.secondary" paragraph>
-        This example demonstrates how to use the slot system to provide a custom image selector with enhanced UI and functionality.
+      <Typography
+        variant="body2"
+        paragraph
+        sx={{
+          color: 'text.secondary'
+        }}
+      >
+        This example demonstrates how to use the slot system to provide a custom image selector with
+        enhanced UI and functionality.
       </Typography>
-      
       <GoalImageGallery
         imageCodes={images}
         canEdit={true}
@@ -624,7 +650,7 @@ export const BulkUploadExample = () => {
 
   const handleBulkUpload = useCallback(async (imageData) => {
     setUploading(true);
-    
+
     try {
       // Simulate bulk upload API call
       const response = await new Promise((resolve) => {
@@ -649,7 +675,7 @@ export const BulkUploadExample = () => {
   }, []);
 
   const handleBulkRefresh = useCallback((result) => {
-    setGalleryImages(prev => [...prev, result.data.code]);
+    setGalleryImages((prev) => [...prev, result.data.code]);
   }, []);
 
   // Custom bulk upload component
@@ -672,33 +698,36 @@ export const BulkUploadExample = () => {
       e.preventDefault();
       e.stopPropagation();
       setDragActive(false);
-      
+
       const files = Array.from(e.dataTransfer.files);
       handleFiles(files);
     };
 
     const handleFiles = async (files) => {
-      const imageFiles = files.filter(file => file.type.startsWith('image/'));
+      const imageFiles = files.filter((file) => file.type.startsWith('image/'));
       setSelectedFiles(imageFiles);
 
       if (imageFiles.length > 0) {
         // Simulate uploading multiple files and getting their codes
         const uploadPromises = imageFiles.map(async (file, index) => {
           return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                code: `bulk-img-${Date.now()}-${index}`,
-                url: URL.createObjectURL(file),
-                filename: file.name,
-                size: file.size,
-                mimeType: file.type
-              });
-            }, 500 + index * 100);
+            setTimeout(
+              () => {
+                resolve({
+                  code: `bulk-img-${Date.now()}-${index}`,
+                  url: URL.createObjectURL(file),
+                  filename: file.name,
+                  size: file.size,
+                  mimeType: file.type
+                });
+              },
+              500 + index * 100
+            );
           });
         });
 
         const uploadedImages = await Promise.all(uploadPromises);
-        
+
         // Call afterUpload with array of images
         await afterUpload(uploadedImages);
       }
@@ -737,28 +766,31 @@ export const BulkUploadExample = () => {
           style={{ display: 'none' }}
           onChange={(e) => handleFiles(Array.from(e.target.files))}
         />
-        
         <Typography variant="h6" gutterBottom>
           Bulk Upload Images
         </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph>
+        <Typography
+          variant="body2"
+          paragraph
+          sx={{
+            color: 'text.secondary'
+          }}
+        >
           Drop multiple images here or click to select
         </Typography>
-        
         {selectedFiles.length > 0 && (
-          <Typography variant="body2" color="success.main">
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'success.main'
+            }}
+          >
             {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} selected
           </Typography>
         )}
-        
-        <Button
-          variant="contained"
-          sx={{ mt: 2, mr: 1 }}
-          disabled={uploading}
-        >
+        <Button variant="contained" sx={{ mt: 2, mr: 1 }} disabled={uploading}>
           {uploading ? 'Uploading...' : 'Select Files'}
         </Button>
-        
         <Button variant="outlined" onClick={onCancel}>
           Cancel
         </Button>
@@ -771,11 +803,16 @@ export const BulkUploadExample = () => {
       <Typography variant="h6" gutterBottom>
         Bulk Upload Gallery
       </Typography>
-      <Typography variant="body2" color="text.secondary" paragraph>
-        This example demonstrates bulk upload functionality where multiple images can be uploaded at once.
-        The handleAfterUpload method now accepts arrays of image objects.
+      <Typography
+        variant="body2"
+        paragraph
+        sx={{
+          color: 'text.secondary'
+        }}
+      >
+        This example demonstrates bulk upload functionality where multiple images can be uploaded at
+        once. The handleAfterUpload method now accepts arrays of image objects.
       </Typography>
-      
       <GoalImageGallery
         imageCodes={galleryImages}
         canEdit={true}

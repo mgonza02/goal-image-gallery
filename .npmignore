@@ -15,8 +15,10 @@ dist/
 .drafts/
 .env*
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-lock.yaml
 sync
 .DS_Store
 *.test.js

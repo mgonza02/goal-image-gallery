@@ -1,14 +1,17 @@
 # Development Dockerfile
 FROM node:22-alpine
 
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@10.33.2 --activate
+
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Copy package files and lockfile
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY . .
@@ -17,4 +20,4 @@ COPY . .
 EXPOSE 3000
 
 # Start development server
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]

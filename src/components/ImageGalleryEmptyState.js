@@ -23,7 +23,12 @@ const ImageGalleryEmptyState = ({
     <StyledEmptyStateContainer>
       <Stack spacing={3} alignItems="center">
         <ImageIcon sx={{ fontSize: 64, color: 'text.secondary' }} />
-        <Typography variant="h6" color="text.secondary">
+        <Typography
+          variant="h6"
+          sx={{
+            color: 'text.secondary'
+          }}
+        >
           {emptyMessage}
         </Typography>
 
@@ -61,7 +66,13 @@ const ImageGalleryEmptyState = ({
               />
             </Stack>
 
-            <Typography variant="caption" color="text.secondary" textAlign="center">
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                textAlign: 'center'
+              }}
+            >
               Soporta múltiples métodos de carga: archivos, portapapeles y URLs
             </Typography>
           </>

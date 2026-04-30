@@ -5,6 +5,34 @@ All notable changes to the GoalImageGallery project will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-29
+
+### ⬆️ Dependency Upgrades
+- **MUI v9**: Upgraded `@mui/material` and `@mui/icons-material` from `^5.18` to `^9.0.0`
+- **Emotion**: Updated `@emotion/react` and `@emotion/styled` to `^11.14.0`
+- **Node engine**: Minimum Node.js version raised to `>=18.0.0`
+
+### 🔧 Migration — MUI v9 Breaking Changes
+- **System props removed**: Migrated deprecated shorthand props (`color`, `alignItems`, `textAlign`, `display`) on Typography and Stack to the `sx` prop using the official `@mui/codemod v9.0.0/system-props` codemod
+- **Stack alignItems**: Restored `alignItems` as a direct prop on `Stack` components where the codemod incorrectly moved it into `sx`, fixing a React DOM prop warning (`React does not recognize the alignItems prop on a DOM element`)
+- **Grid v2**: Confirmed Grid already uses the v2 `size` prop API required by MUI v9
+
+### 📦 Package Manager — Migrated to pnpm
+- **pnpm@10.33.2**: Replaced npm with pnpm as the official package manager
+- Added `"packageManager": "pnpm@10.33.2"` to `package.json`
+- Added `.npmrc` with `engine-strict=true`, `auto-install-peers=true`, `shamefully-hoist=false`
+- All `npm run X` script calls replaced with `pnpm X`
+- `package-lock.json` replaced by `pnpm-lock.yaml`
+- Updated `.gitignore` and `.npmignore` with pnpm log/lockfile entries
+
+### 🐳 Docker
+- **Dockerfile**: Replaced `npm install` with `corepack enable && corepack prepare pnpm@10.33.2 --activate` + `pnpm install --frozen-lockfile`; `CMD` updated to `pnpm start`
+- **docker-compose.yml**: Updated `command` from `node start.js` to `pnpm build`
+
+### 📐 Architecture
+- Added `SOLID_PRINCIPLES.md`: documents how SRP, OCP, LSP, ISP, and DIP are applied and enforced in this codebase, including allowed import direction graph and PR checklist
+
+
 ## [1.1.1] - 2025-07-14
 ### 🐛 Bug Fixes
 - **Fixed Image Gallery Modal**: Resolved issues with the image gallery modal not displaying correctly

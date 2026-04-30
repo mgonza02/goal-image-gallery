@@ -1,6 +1,6 @@
 {
     "name": "@mgonza02/goal-image-gallery",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "Advanced, accessible, and highly customizable React image gallery component with multi-method upload, responsive design, and extensive TypeScript support",
     "main": "lib/index.js",
     "module": "lib/index.js",
@@ -43,27 +43,28 @@
         "LICENSE"
     ],
     "peerDependencies": {
-        "@emotion/react": "^11.0.0",
-        "@emotion/styled": "^11.0.0",
-        "@mui/icons-material": "^5.18.0",
-        "@mui/material": "^5.18.0",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^9.0.0",
+        "@mui/material": "^9.0.0",
         "react": "^18.0.0",
         "react-dom": "^18.0.0"
     },
     "dependencies": {
         "prop-types": "^15.8.0"
     },
+    "packageManager": "pnpm@10.33.2",
     "scripts": {
-        "build": "npm run clean && npm run build:js && npm run build:types",
+        "build": "pnpm clean && pnpm build:js && pnpm build:types",
         "build:js": "babel src --out-dir lib --copy-files --ignore '**/*.test.js'",
         "build:types": "cp src/index.d.ts lib/index.d.ts",
-        "prepublishOnly": "npm run build",
+        "prepublishOnly": "pnpm build",
         "format": "prettier --write src/**/*.js",
         "format:check": "prettier --check src/**/*.js",
         "clean": "rm -rf lib",
-        "validate": "npm run format:check",
-        "dev": "npm run build -- --watch",
-        "prepack": "npm run validate && npm run build"
+        "validate": "pnpm format:check",
+        "dev": "pnpm build -- --watch",
+        "prepack": "pnpm validate && pnpm build"
     },
     "devDependencies": {
         "@babel/cli": "^7.20.0",
@@ -85,6 +86,7 @@
         ]
     },
     "engines": {
-        "node": ">=16.0.0"
+        "node": ">=18.0.0",
+        "pnpm": ">=9.0.0"
     }
 }

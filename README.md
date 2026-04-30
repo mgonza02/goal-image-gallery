@@ -53,10 +53,10 @@ import { GoalImageGallery } from '@mgonza02/goal-image-gallery';
 
 ## Installation & Setup
 
-### NPM Installation
+### Installation
 
 ```bash
-npm install @mgonza02/goal-image-gallery
+pnpm add @mgonza02/goal-image-gallery
 ```
 
 ### Peer Dependencies
@@ -64,7 +64,7 @@ npm install @mgonza02/goal-image-gallery
 Make sure you have the required peer dependencies installed:
 
 ```bash
-npm install @mui/material @mui/icons-material @emotion/react @emotion/styled react react-dom
+pnpm add @mui/material @mui/icons-material @emotion/react @emotion/styled react react-dom
 ```
 
 ### Import
@@ -1106,13 +1106,13 @@ When contributing to this component:
 For detailed information about changes, new features, and updates across versions, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Updates
+- **v1.2.0**: Upgraded to MUI v9, migrated to pnpm, Docker build pipeline, SOLID principles documentation
+- **v1.1.1**: Modal responsiveness, accessibility improvements, styled-components replaced with MUI Box
+- **v1.1.0**: Fixed handleAfterUpload array structure for bulk uploads
 - **v1.0.6**: Major package cleanup and optimization
 - **v1.0.5**: Initial package review and dependency analysis
 - **v1.0.4**: Comprehensive documentation overhaul
 - **v1.0.3**: NPM publication and scoped package setup
-- **v1.0.2**: Slot system implementation and UI enhancements
-- **v1.0.1**: Bug fixes and stability improvements
-- **v1.0.0**: Initial release with core features
 
 ## License
 

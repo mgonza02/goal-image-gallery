@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: node start.js
+    command: pnpm build
     ports:
       - "3000:3000"
     volumes:

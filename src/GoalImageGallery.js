@@ -19,7 +19,7 @@ import { downloadImage } from "./utils/image-utils";
  * Provides advanced upload capabilities, responsive design, accessibility features, and extensive customization options.
  * 
  * @component
- * @version 1.0.3
+ * @version 1.2.0
  * @author Goal Team
  * @since 2023
  * 
